@@ -7,4 +7,18 @@ extension String {
 			}
 		}
 	}
+	
+	func drop(before: String) -> String {
+		let components = self.components(separatedBy: before)
+		guard let first = components.first else {
+			return self
+		}
+		return first
+	}
+	
+	func drop(after: String) -> String {
+		let components = self.components(separatedBy: after)
+		let last = components.dropFirst()
+		return last.joined()
+	}
 }

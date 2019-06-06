@@ -9,7 +9,7 @@ final class ImprovTests: XCTestCase {
 				Group(tags: ["class": "bird"], phrases: ["parrot", "eagle"])
 			],
 			"root": [
-				Group(tags: [:], phrases: ["[name]: I have a [:animal] who is [#2-7] years old."])
+				Group(tags: [:], phrases: ["I have a [:animal] who is [#2–7] years old."])
 
 			]]
 		)

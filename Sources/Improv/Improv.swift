@@ -39,9 +39,15 @@ public struct Improv {
 		// `template()` defined here: https://github.com/sequitur/improv/blob/master/lib/template.js#L94-L109
 //		const output = template(chosenPhrase, model, this.__gen.bind(this), this);
 		
-		let output = try Template.applyTemplate(phrase: chosenPhrase, model: model, callback: { (any, updatedModel) -> String in
-			return "huh?"
-		}, generator: ())
+		let output = try Template.applyTemplate(
+			phrase: chosenPhrase,
+			model: model,
+			generator: self,
+			callback: { (snippetName, updatedModel) -> String in
+				let snippet = self.spec[snippetName]!
+				let rando = snippet.groups.randomElement()!.phrases.randomElement()!
+				return rando
+		})
 		
 		if spec[snippetName]?.bind == true {
 			model.bindings[snippetName] = output
