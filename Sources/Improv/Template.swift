@@ -6,7 +6,7 @@ extension Template {
 	
 	
 	/// Original source: [template.js#processDirective](https://github.com/sequitur/improv/blob/master/lib/template.js#L41-L92)
-	static func processDirective(rawDirective: String, model: Model, generator: Improv, callback: (String, Model) -> String) throws -> String {
+	static func processDirective(rawDirective: String, model: Model, generator: Improv, callback: (String, Model) -> String?) throws -> String? {
 		
 		let directive = rawDirective.trimmingCharacters(in: .whitespacesAndNewlines)
 		guard directive.count > 0 else {
@@ -77,7 +77,7 @@ extension Template {
 	}
 	
 	/// Original source: [template.js#template](https://github.com/sequitur/improv/blob/master/lib/template.js#L94-L109)
-	static func applyTemplate(phrase: String, model: Model, generator: Improv, callback: (String, Model) -> String) throws -> String {
+	static func applyTemplate(phrase: String, model: Model, generator: Improv, callback: (String, Model) -> String?) throws -> String? {
 		// need to loop through all directives
 		// before/after:  https://github.com/sequitur/improv/blob/master/lib/template.js#L100
 		guard let rawDirective = phrase.slice(from: "[", to: "]") else {
@@ -85,7 +85,7 @@ extension Template {
 		}
 		let before = phrase.drop(before: "[")
 		let after = phrase.drop(after: rawDirective + "]")
-		let processedDirective = try self.processDirective(rawDirective: rawDirective, model: model, generator: generator, callback: callback)
+		let processedDirective = try self.processDirective(rawDirective: rawDirective, model: model, generator: generator, callback: callback) ?? ""
 		let nextPhrase: String = before + processedDirective + after
 		let directive = try applyTemplate(phrase: nextPhrase, model: model, generator: generator, callback: callback)
 		return directive

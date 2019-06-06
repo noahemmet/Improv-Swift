@@ -43,9 +43,21 @@ public struct Improv {
 			phrase: chosenPhrase,
 			model: model,
 			generator: self,
-			callback: { (snippetName, updatedModel) -> String in
+			callback: { (snippetName, updatedModel) -> String? in
 				let snippet = self.spec[snippetName]!
-				let rando = snippet.groups.randomElement()!.phrases.randomElement()!
+				let filteredGroups = snippet.groups.filter { group in
+					guard model.tags.isEmpty == false else {
+						return true
+					}
+					return group.tags.contains(where: { groupTagKey, groupTagValue in
+						let matchingTags = model.tags.filter { modelTagKey, modelTagValue in
+							return groupTagKey == modelTagKey &&
+							groupTagValue == modelTagValue
+						}
+						return !matchingTags.isEmpty
+					})
+				}
+				let rando = filteredGroups.randomElement()?.phrases.randomElement()
 				return rando
 		})
 		
@@ -55,7 +67,7 @@ public struct Improv {
 		
 		self.currentSnippet = previousSnippet
 		
-		return output
+		return output ?? ""
 	}
 	
 	/// Original source: [index.js#scoreFilter](https://github.com/sequitur/improv/blob/master/lib/index.js#L211-L224)
