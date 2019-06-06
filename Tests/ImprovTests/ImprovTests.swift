@@ -2,14 +2,32 @@ import XCTest
 @testable import Improv
 
 final class ImprovTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(Improv().text, "Hello, World!")
+    func testImprov() throws {
+		let spec = Spec([
+			"animal": [
+				Group(tags: ["class": "mammal"], phrases: ["dog", "cat"]),
+				Group(tags: ["class": "bird"], phrases: ["parrot", "eagle"])
+			],
+			"root": [
+				Group(tags: [:], phrases: ["[name]: I have a [:animal] who is [#2-7] years old."])
+
+			]]
+		)
+		
+		var bob = Model(name: "Bob", tags: [:])
+		var alice = Model(name: "Alice", tags: ["class": "mammal"])
+		var carol = Model(name: "Carol", tags: ["class": "bird"])
+		
+		var improv = Improv(spec: spec)
+		
+		let lines: [String] = [
+			try improv.generate(snippet: "root", model: &bob)
+		]
+		print(lines)
+		XCTAssertTrue(lines.count == 1)
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testImprov", testImprov),
     ]
 }
