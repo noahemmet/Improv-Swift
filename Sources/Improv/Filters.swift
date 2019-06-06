@@ -7,4 +7,4 @@
 
 import Foundation
 
-public typealias Filter = () -> Void
+public typealias Filter = (Group, Model) -> Void

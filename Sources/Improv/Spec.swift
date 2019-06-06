@@ -10,6 +10,11 @@ public struct Spec: Hashable, Codable {
 			return .init(name: element.0, groups: element.1)
 		}
 	}
+	
+	public subscript(_ snippetName: String) -> Snippet? {
+		let snippet = snippets.first(where: { $0.name == snippetName })
+		return snippet
+	}
 }
 
 public let spec = Spec([
