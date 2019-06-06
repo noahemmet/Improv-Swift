@@ -39,13 +39,17 @@ public struct Improv {
 		// `template()` defined here: https://github.com/sequitur/improv/blob/master/lib/template.js#L94-L109
 //		const output = template(chosenPhrase, model, this.__gen.bind(this), this);
 		
+		let output = try Template.applyTemplate(phrase: chosenPhrase, model: model, callback: { (any, updatedModel) -> String in
+			return "huh?"
+		}, generator: ())
+		
 		if spec[snippetName]?.bind == true {
-			model.bindings[snippetName] = chosenPhrase
+			model.bindings[snippetName] = output
 		}
 		
 		self.currentSnippet = previousSnippet
 		
-		return chosenPhrase
+		return output
 	}
 	
 	/// Original source: [index.js#scoreFilter](https://github.com/sequitur/improv/blob/master/lib/index.js#L211-L224)

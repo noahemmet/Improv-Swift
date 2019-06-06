@@ -21,10 +21,12 @@ final class ImprovTests: XCTestCase {
 		var improv = Improv(spec: spec)
 		
 		let lines: [String] = [
-			try improv.generate(snippet: "root", model: &bob)
+			try improv.generate(snippet: "root", model: &bob),
+			try improv.generate(snippet: "root", model: &alice),
+			try improv.generate(snippet: "root", model: &carol),
 		]
 		print(lines)
-		XCTAssertTrue(lines.count == 1)
+		XCTAssertTrue(lines.count == 3)
     }
 
     static var allTests = [
