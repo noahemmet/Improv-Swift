@@ -6,15 +6,15 @@ final class ImprovTests: XCTestCase {
 		let spec = Spec([
 			"animal": [
 				Group(tags: ["class": "mammal"], phrases: ["dog", "cat"]),
-				Group(tags: ["class": "bird"], phrases: ["parrot", "eagle"])
+				Group(tags: ["class": "bird"], phrases: ["parrot"])
 			],
 			"root": [
-				Group(tags: [:], phrases: ["I have a [:animal] who is [#2–7] years old."])
+				Group(phrases: ["I have a [:animal] who is [#2–7] years old."])
 
 			]]
 		)
 		
-		var bob = Model(name: "Bob", tags: [:])
+		var bob = Model(name: "Bob")
 		var alice = Model(name: "Alice", tags: ["class": "mammal"])
 		var carol = Model(name: "Carol", tags: ["class": "bird"])
 		
@@ -27,6 +27,7 @@ final class ImprovTests: XCTestCase {
 		]
 		print(lines)
 		XCTAssertTrue(lines.count == 3)
+		XCTAssertTrue(lines[2].hasPrefix("I have a parrot"))
     }
 
     static var allTests = [

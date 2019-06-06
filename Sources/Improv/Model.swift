@@ -11,15 +11,15 @@ import Foundation
 public struct Model {
 	public var name: String
 	public var tags: [String: String]
-	public var bindings: [String: String]
+	internal var phrasesBoundBySnippet: [String: String]
 
 	public init(
 		name: String,
-		tags: [String: String],
-		bindings: [String: String] = [:]
+		tags: [String: String] = [:],
+		boundPhrases: [String: String] = [:]
 		) {
 		self.name = name
 		self.tags = tags
-		self.bindings = bindings
+		self.phrasesBoundBySnippet = boundPhrases
 	}
 }

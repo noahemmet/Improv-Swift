@@ -19,8 +19,8 @@ public struct Improv {
 		guard let snippet = spec[snippetName] else {
 			throw Error.missingSnippet(snippetName)
 		}
-		if let boundSnippet = model.bindings[snippetName] {
-			return boundSnippet
+		if let boundPhrase = model.phrasesBoundBySnippet[snippetName] {
+			return boundPhrase
 		}
 		
 		let previousSnippet = currentSnippet
@@ -62,7 +62,7 @@ public struct Improv {
 		})
 		
 		if spec[snippetName]?.bind == true {
-			model.bindings[snippetName] = output
+			model.phrasesBoundBySnippet[snippetName] = output
 		}
 		
 		self.currentSnippet = previousSnippet
